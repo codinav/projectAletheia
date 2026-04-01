@@ -10,135 +10,408 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
         h1, h2, h3, h4, h5, h6, .font-serif { font-family: 'Merriweather', serif; }
-        .glass-nav { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); }
+        .glass-nav { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        /* Smooth image zoom on hover */
+        .img-zoom { transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .group:hover .img-zoom { transform: scale(1.08); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased" x-data="{ scrolled: false, mobileMenu: false }" @scroll.window="scrolled = (window.pageYOffset > 50)">
 
-    <nav :class="scrolled ? 'glass-nav shadow-lg' : 'bg-transparent'" class="fixed w-full z-50 transition-all duration-300 text-white">
+    <nav :class="scrolled ? 'glass-nav shadow-2xl py-2' : 'bg-transparent py-4'" class="fixed w-full z-50 transition-all duration-500 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <a href="index.html" class="font-serif text-2xl font-bold tracking-wider">ALETHEIA.</a>
-                <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-medium">
-                    <a href="index.html" class="hover:text-amber-300 transition-colors border-b-2 border-amber-300">Home</a>
-                    <a href="articles.html" class="hover:text-amber-300 transition-colors">Articles</a>
-                    <a href="research.html" class="hover:text-amber-300 transition-colors">Research</a>
-                    <a href="events.html" class="hover:text-amber-300 transition-colors">Events</a>
-                    <a href="submit.html" class="bg-amber-600 hover:bg-amber-500 text-white px-5 py-2 rounded-sm transition-colors">Submit</a>
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="font-serif text-2xl font-bold tracking-widest uppercase">Aletheia.</a>
+                <div class="hidden md:flex space-x-8 text-xs uppercase tracking-[0.2em] font-medium items-center">
+                    <a href="index.html" class="hover:text-amber-400 transition-colors border-b border-amber-400 pb-1">Home</a>
+                    <a href="articles.html" class="hover:text-amber-400 transition-colors pb-1">Articles</a>
+                    <a href="research.html" class="hover:text-amber-400 transition-colors pb-1">Research</a>
+                    <a href="events.html" class="hover:text-amber-400 transition-colors pb-1">Events</a>
+                    <a href="submit.html" class="bg-amber-600 hover:bg-amber-500 text-white px-6 py-2.5 rounded-sm transition-colors tracking-widest">Submit</a>
                 </div>
-                <button @click="mobileMenu = !mobileMenu" class="md:hidden focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden focus:outline-none text-white">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
-        <div x-show="mobileMenu" x-transition class="md:hidden bg-slate-900 absolute w-full text-center">
-            <a href="index.html" class="block py-4 hover:bg-slate-800">Home</a>
-            <a href="articles.html" class="block py-4 hover:bg-slate-800">Articles</a>
-            <a href="research.html" class="block py-4 hover:bg-slate-800">Research</a>
-            <a href="events.html" class="block py-4 hover:bg-slate-800">Events</a>
-            <a href="submit.html" class="block py-4 text-amber-400">Submit Work</a>
+        <div x-show="mobileMenu" x-transition.duration.300ms class="md:hidden bg-slate-900 absolute w-full text-center border-t border-slate-800 shadow-2xl">
+            <a href="index.html" class="block py-4 hover:bg-slate-800 text-sm tracking-widest uppercase">Home</a>
+            <a href="articles.html" class="block py-4 hover:bg-slate-800 text-sm tracking-widest uppercase">Articles</a>
+            <a href="research.html" class="block py-4 hover:bg-slate-800 text-sm tracking-widest uppercase">Research</a>
+            <a href="events.html" class="block py-4 hover:bg-slate-800 text-sm tracking-widest uppercase">Events</a>
+            <a href="submit.html" class="block py-4 text-amber-500 text-sm tracking-widest uppercase font-bold">Submit Work</a>
         </div>
     </nav>
 
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
-        <video autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none object-cover brightness-50">
+        <video autoplay loop muted playsinline class="absolute z-0 w-auto min-w-full min-h-full max-w-none object-cover scale-105">
             <source src="https://cdn.coverr.co/videos/coverr-a-man-reading-a-book-in-a-library-2720/1080p.mp4" type="video/mp4">
         </video>
-        <div class="absolute inset-0 bg-gradient-to-b from-slate-900/60 to-slate-900/90 z-10"></div>
-        <div class="relative z-20 text-center px-4 max-w-4xl mx-auto" data-aos="fade-up">
-            <span class="text-amber-400 tracking-[0.3em] text-sm uppercase font-semibold mb-4 block">The Pursuit of Truth</span>
-            <h1 class="text-5xl md:text-7xl font-serif text-white font-bold leading-tight mb-6">Examine Your Life. <br>Expand Your Mind.</h1>
-            <p class="text-lg md:text-xl text-slate-300 mb-10 font-light max-w-2xl mx-auto">Explore rigorous academic research, timeless philosophical articles, and engaging lectures from the world's leading thinkers.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="articles.html" class="bg-amber-600 hover:bg-amber-500 text-white px-8 py-3 rounded-sm font-medium tracking-wide transition-all duration-300 text-lg">Read Journals</a>
-                <a href="events.html" class="border border-white hover:bg-white hover:text-slate-900 text-white px-8 py-3 rounded-sm font-medium tracking-wide transition-all duration-300 text-lg">View Events</a>
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900/95 z-10"></div>
+        
+        <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
+            <span data-aos="fade-down" data-aos-duration="1000" class="text-amber-500 tracking-[0.4em] text-xs md:text-sm uppercase font-bold mb-6 block">The Pursuit of Truth</span>
+            <h1 data-aos="zoom-out" data-aos-duration="1200" data-aos-delay="200" class="text-5xl md:text-8xl font-serif text-white font-bold leading-tight mb-8 drop-shadow-lg">
+                Examine Your Life. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">Expand Your Mind.</span>
+            </h1>
+            <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" class="text-lg md:text-2xl text-slate-300 mb-12 font-light max-w-3xl mx-auto leading-relaxed">
+                Explore rigorous academic research, timeless philosophical journals, and cinematic lectures from the world's leading thinkers.
+            </p>
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600" class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="articles.html" class="bg-amber-600 hover:bg-amber-500 text-white px-10 py-4 rounded-sm font-medium tracking-widest uppercase text-sm transition-all duration-300 shadow-[0_0_20px_rgba(217,119,6,0.4)]">Read Journals</a>
+                <a href="#cinematic-video" class="border border-slate-400 hover:bg-white hover:text-slate-900 text-white px-10 py-4 rounded-sm font-medium tracking-widest uppercase text-sm transition-all duration-300">Watch Lectures</a>
             </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
         </div>
     </header>
 
-    <section class="py-24 bg-white">
+    <section class="py-24 bg-slate-50 relative z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-end mb-12" data-aos="fade-right">
-                <div>
-                    <h2 class="text-4xl font-serif font-bold text-slate-900">Featured Discourse</h2>
-                    <p class="text-slate-500 mt-2">The latest essays and academic papers.</p>
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-sm tracking-[0.3em] text-amber-600 font-bold uppercase mb-4">Core Disciplines</h2>
+                <h3 class="text-4xl font-serif font-bold text-slate-900">Frameworks of Reality</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="group relative h-80 overflow-hidden rounded-sm cursor-pointer" data-aos="fade-up" data-aos-delay="100" onclick="window.location='articles.html'">
+                    <img src="https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover img-zoom">
+                    <div class="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/40 transition-colors duration-500"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h4 class="text-white font-serif text-2xl font-bold mb-2">Metaphysics</h4>
+                        <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">The fundamental nature of existence.</p>
+                    </div>
                 </div>
-                <a href="articles.html" class="hidden md:block text-amber-600 font-medium hover:text-amber-700">View all articles &rarr;</a>
+                <div class="group relative h-80 overflow-hidden rounded-sm cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="window.location='articles.html'">
+                    <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover img-zoom">
+                    <div class="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/40 transition-colors duration-500"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h4 class="text-white font-serif text-2xl font-bold mb-2">Ethics</h4>
+                        <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Moral principles and the good life.</p>
+                    </div>
+                </div>
+                <div class="group relative h-80 overflow-hidden rounded-sm cursor-pointer" data-aos="fade-up" data-aos-delay="300" onclick="window.location='articles.html'">
+                    <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover img-zoom">
+                    <div class="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/40 transition-colors duration-500"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h4 class="text-white font-serif text-2xl font-bold mb-2">Epistemology</h4>
+                        <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">The theory of knowledge and truth.</p>
+                    </div>
+                </div>
+                <div class="group relative h-80 overflow-hidden rounded-sm cursor-pointer" data-aos="fade-up" data-aos-delay="400" onclick="window.location='articles.html'">
+                    <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover img-zoom">
+                    <div class="absolute inset-0 bg-slate-900/60 group-hover:bg-slate-900/40 transition-colors duration-500"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h4 class="text-white font-serif text-2xl font-bold mb-2">Aesthetics</h4>
+                        <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">The philosophy of art and beauty.</p>
+                    </div>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        </div>
+    </section>
+
+    <section id="cinematic-video" class="relative py-32 md:py-48 overflow-hidden bg-slate-950">
+        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none" data-aos="fade-in" data-aos-duration="2000">
+            <source src="https://cdn.coverr.co/videos/coverr-stars-in-the-night-sky-2713/1080p.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950 z-10"></div>
+        
+        <div class="relative z-20 max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span data-aos="fade-up" class="text-amber-500 tracking-[0.4em] text-sm uppercase font-bold mb-4 block">Lecture of the Month</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl md:text-6xl font-serif text-white font-bold mb-6">Consciousness & The Cosmos</h2>
+                <p data-aos="fade-up" data-aos-delay="200" class="text-slate-400 max-w-2xl mx-auto text-lg">Immerse yourself in Dr. Alan Vance's groundbreaking symposium on panpsychism. Does the universe itself possess a subjective experience?</p>
+            </div>
+
+            <div data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="300" class="relative rounded-sm overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-800 bg-black aspect-w-16 aspect-h-9 max-w-4xl mx-auto group">
+                <iframe class="w-full h-[300px] md:h-[500px]" src="https://www.youtube.com/embed/5897dMWJiSM?modestbranding=1&rel=0" title="Philosophy Lecture" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-white relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-slate-200 pb-8" data-aos="fade-right">
+                <div>
+                    <span class="text-amber-600 tracking-widest text-xs uppercase font-bold mb-2 block">Latest Publications</span>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-slate-900">Featured Discourse</h2>
+                </div>
+                <a href="articles.html" class="hidden md:flex items-center text-slate-900 font-medium hover:text-amber-600 transition-colors uppercase tracking-widest text-sm mt-4 md:mt-0">
+                    Explore Archives <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <article class="group cursor-pointer" data-aos="fade-up" data-aos-delay="100" onclick="window.location='article.html'">
-                    <div class="overflow-hidden mb-4 rounded-sm relative">
-                        <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Stoicism" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute top-4 left-4 bg-white text-xs font-bold px-3 py-1 uppercase tracking-wider text-slate-900">Ethics</div>
+                    <div class="overflow-hidden mb-6 rounded-sm relative shadow-md">
+                        <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Stoicism" class="w-full h-72 object-cover img-zoom">
+                        <div class="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest shadow-lg">Ethics</div>
                     </div>
-                    <p class="text-sm text-amber-600 font-semibold mb-2">By Dr. Elena Rostova • Oct 12, 2025</p>
-                    <h3 class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">The Modern Application of Stoic Resilience</h3>
-                    <p class="text-slate-600 line-clamp-3">How ancient teachings from Seneca and Marcus Aurelius provide a practical framework for navigating the anxieties of the digital age.</p>
-                </article>
-                <article class="group cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="window.location='article.html'">
-                    <div class="overflow-hidden mb-4 rounded-sm relative">
-                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Metaphysics" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute top-4 left-4 bg-white text-xs font-bold px-3 py-1 uppercase tracking-wider text-slate-900">Metaphysics</div>
+                    <div class="flex items-center text-xs text-slate-500 font-medium mb-3 uppercase tracking-wider">
+                        <span class="text-amber-600">Dr. Elena Rostova</span>
+                        <span class="mx-2">•</span>
+                        <span>Oct 12, 2025</span>
                     </div>
-                    <p class="text-sm text-amber-600 font-semibold mb-2">By James Thorne • Oct 05, 2025</p>
-                    <h3 class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">Consciousness in the Machine: AI and Being</h3>
-                    <p class="text-slate-600 line-clamp-3">An exploration into whether artificial neural networks can ever possess phenomenology, viewing the question through a Heideggerian lens.</p>
+                    <h3 class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors leading-snug">The Modern Application of Stoic Resilience</h3>
+                    <p class="text-slate-600 line-clamp-3 leading-relaxed">How ancient teachings from Seneca and Marcus Aurelius provide a practical framework for navigating the anxieties of the digital age.</p>
                 </article>
+                
                 <article class="group cursor-pointer" data-aos="fade-up" data-aos-delay="300" onclick="window.location='article.html'">
-                    <div class="overflow-hidden mb-4 rounded-sm relative">
-                        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Epistemology" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute top-4 left-4 bg-white text-xs font-bold px-3 py-1 uppercase tracking-wider text-slate-900">Epistemology</div>
+                    <div class="overflow-hidden mb-6 rounded-sm relative shadow-md">
+                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Metaphysics" class="w-full h-72 object-cover img-zoom">
+                        <div class="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest shadow-lg">Metaphysics</div>
                     </div>
-                    <p class="text-sm text-amber-600 font-semibold mb-2">By Prof. Sarah Chen • Sep 28, 2025</p>
-                    <h3 class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">Post-Truth and the Collapse of Shared Reality</h3>
-                    <p class="text-slate-600 line-clamp-3">Analyzing the epistemological crisis of the 21st century and how decentralized media alters our collective conception of truth.</p>
+                    <div class="flex items-center text-xs text-slate-500 font-medium mb-3 uppercase tracking-wider">
+                        <span class="text-amber-600">James Thorne</span>
+                        <span class="mx-2">•</span>
+                        <span>Oct 05, 2025</span>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors leading-snug">Consciousness in the Machine: AI and Being</h3>
+                    <p class="text-slate-600 line-clamp-3 leading-relaxed">An exploration into whether artificial neural networks can ever possess phenomenology, viewing the question through a Heideggerian lens.</p>
+                </article>
+                
+                <article class="group cursor-pointer" data-aos="fade-up" data-aos-delay="500" onclick="window.location='article.html'">
+                    <div class="overflow-hidden mb-6 rounded-sm relative shadow-md">
+                        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Epistemology" class="w-full h-72 object-cover img-zoom">
+                        <div class="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest shadow-lg">Epistemology</div>
+                    </div>
+                    <div class="flex items-center text-xs text-slate-500 font-medium mb-3 uppercase tracking-wider">
+                        <span class="text-amber-600">Prof. Sarah Chen</span>
+                        <span class="mx-2">•</span>
+                        <span>Sep 28, 2025</span>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors leading-snug">Post-Truth and the Collapse of Shared Reality</h3>
+                    <p class="text-slate-600 line-clamp-3 leading-relaxed">Analyzing the epistemological crisis of the 21st century and how decentralized media alters our collective conception of truth.</p>
                 </article>
             </div>
+            
+            <div class="mt-12 text-center md:hidden" data-aos="fade-up">
+                <a href="articles.html" class="inline-block border border-slate-900 text-slate-900 px-8 py-3 uppercase tracking-widest text-sm font-bold hover:bg-slate-900 hover:text-white transition-colors">View All Articles</a>
+            </div>
         </div>
     </section>
 
-    <section class="py-32 relative bg-slate-900 bg-fixed bg-center bg-cover" style="background-image: url('https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
-        <div class="absolute inset-0 bg-slate-900/80"></div>
-        <div class="relative z-10 max-w-4xl mx-auto text-center px-4" data-aos="zoom-in">
-            <svg class="w-12 h-12 text-amber-500 mx-auto mb-6 opacity-80" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-            <blockquote class="text-3xl md:text-5xl font-serif text-white leading-snug italic mb-8">
-                "The unexamined life is not worth living."
-            </blockquote>
-            <cite class="text-amber-400 tracking-widest uppercase text-sm font-semibold">— Socrates</cite>
+<section class="py-40 relative bg-slate-900 bg-fixed bg-center bg-cover shadow-inner h-[600px] flex flex-col justify-center" 
+        style="background-image: url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"
+        x-data="{
+            quotes: [
+                { text: 'The unexamined life is not worth living.', author: 'Socrates' },
+                { text: 'He who has a why to live for can bear almost any how.', author: 'Friedrich Nietzsche' },
+                { text: 'We are what we repeatedly do. Excellence, then, is not an act, but a habit.', author: 'Aristotle' },
+                { text: 'I think, therefore I am.', author: 'René Descartes' },
+                { text: 'Man is condemned to be free; because once thrown into the world, he is responsible for everything he does.', author: 'Jean-Paul Sartre' }
+            ],
+            activeIndex: 0,
+            show: true,
+            startRotation() {
+                // Change quote every 3.5 seconds (allowing 500ms for the exit animation)
+                setInterval(() => {
+                    this.show = false;
+                    setTimeout(() => {
+                        this.activeIndex = (this.activeIndex + 1) % this.quotes.length;
+                        this.show = true;
+                    }, 500);
+                }, 3500); 
+            }
+        }"
+        x-init="startRotation()">
+        
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"></div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto text-center px-4" data-aos="zoom-in" data-aos-duration="1500">
+            <svg class="w-16 h-16 text-amber-500 mx-auto mb-8 opacity-90 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            
+            <div class="min-h-[200px] flex flex-col justify-center items-center"
+                 x-show="show"
+                 x-transition:enter="transition ease-out duration-700 transform"
+                 x-transition:enter-start="opacity-0 translate-y-8 scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                 x-transition:leave="transition ease-in duration-500 transform"
+                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                 x-transition:leave-end="opacity-0 -translate-y-8 scale-95"
+                 style="display: none;"> <blockquote class="text-3xl md:text-5xl font-serif text-white leading-tight italic mb-10 drop-shadow-md px-4" x-text="`&quot;${quotes[activeIndex].text}&quot;`">
+                </blockquote>
+                
+                <div class="w-16 h-1 bg-amber-500 mx-auto mb-6"></div>
+                
+                <cite class="text-slate-300 tracking-[0.3em] uppercase text-sm font-bold block" x-text="`— ${quotes[activeIndex].author}`"></cite>
+            </div>
         </div>
     </section>
 
-    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-            <div>
-                <h4 class="font-serif text-white text-xl mb-4">ALETHEIA.</h4>
-                <p>A premium digital publication dedicated to rigorous philosophical research, existential inquiry, and modern ethics.</p>
+    <section class="py-32 bg-slate-100 overflow-hidden relative border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-32" data-aos="fade-down" data-aos-duration="1200">
+                <span class="text-amber-600 tracking-[0.3em] text-xs uppercase font-bold mb-4 block">Chronicles</span>
+                <h2 class="text-5xl md:text-7xl font-serif font-bold text-slate-900 tracking-tight">The Eras of Thought</h2>
+                <div class="w-24 h-1 bg-slate-900 mx-auto mt-8"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center mb-40 relative group">
+                <div class="md:w-1/2 z-10" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="bg-white p-10 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] md:-mr-16 relative z-20 transition-transform duration-700 group-hover:-translate-y-2 border-t-4 border-amber-600">
+                        <h3 class="text-slate-400 font-bold tracking-[0.3em] text-sm mb-4">01. ANTIQUITY</h3>
+                        <h4 class="text-4xl md:text-5xl font-serif text-slate-900 font-bold mb-6 leading-tight">The Foundations <br>of Reason</h4>
+                        <p class="text-slate-600 text-lg leading-relaxed mb-8">From the steps of the Parthenon to the stoas of Rome, discover the birth of logic, ethics, and early metaphysics. The questions asked here still echo in our modern algorithms.</p>
+                        <a href="articles.html" class="inline-flex items-center text-slate-900 uppercase tracking-widest text-xs font-bold hover:text-amber-600 transition-colors">
+                            Explore Antiquity <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 w-full mt-10 md:mt-0 relative" data-aos="fade-left" data-aos-duration="1500" data-aos-delay="200">
+                    <div class="overflow-hidden rounded-sm shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1544605481-9b6d8b9e6e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Classical Statues" class="w-full h-[500px] md:h-[600px] object-cover filter grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-1000 ease-out">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row-reverse items-center relative group">
+                <div class="md:w-1/2 z-10" data-aos="fade-left" data-aos-duration="1200">
+                    <div class="bg-slate-900 p-10 md:p-16 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] md:-ml-16 relative z-20 text-white transition-transform duration-700 group-hover:-translate-y-2 border-t-4 border-amber-500">
+                        <h3 class="text-slate-500 font-bold tracking-[0.3em] text-sm mb-4">02. MODERNITY</h3>
+                        <h4 class="text-4xl md:text-5xl font-serif font-bold mb-6 leading-tight">The Enlightenment <br>& Beyond</h4>
+                        <p class="text-slate-300 text-lg leading-relaxed mb-8">The radical shift from dogmatic adherence to empirical observation. Trace the lineage from Descartes' radical doubt to Kant's categorical imperative.</p>
+                        <a href="articles.html" class="inline-flex items-center text-white uppercase tracking-widest text-xs font-bold hover:text-amber-500 transition-colors">
+                            Explore Modernity <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 w-full mt-10 md:mt-0 relative" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="200">
+                    <div class="overflow-hidden rounded-sm shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Old Books" class="w-full h-[500px] md:h-[600px] object-cover filter sepia opacity-90 group-hover:sepia-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-1000 ease-out">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-black relative overflow-hidden flex items-center min-h-[90vh]">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <div class="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full bg-amber-600/20 blur-[150px] animate-pulse" style="animation-duration: 6s;"></div>
+            <div class="absolute -bottom-[20%] -left-[10%] w-[600px] h-[600px] rounded-full bg-slate-500/20 blur-[150px] animate-pulse" style="animation-duration: 8s;"></div>
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-20 mix-blend-overlay"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                
+                <div data-aos="fade-up" data-aos-duration="1200">
+                    <span class="text-amber-500 tracking-[0.4em] text-xs uppercase font-bold mb-6 flex items-center gap-4">
+                        <span class="w-12 h-[2px] bg-amber-500"></span> Sonic Explorations
+                    </span>
+                    <h2 class="text-5xl md:text-7xl font-serif text-white font-bold mb-8 leading-tight drop-shadow-lg">
+                        Philosophy,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-300 to-slate-500">Unplugged.</span>
+                    </h2>
+                    <p class="text-slate-400 text-lg md:text-xl leading-relaxed mb-12 max-w-lg font-light">
+                        Step away from the screen. Listen to beautifully narrated audio essays, rigorous debates, and deep-dive symposiums on the go.
+                    </p>
+                    
+                    <div class="flex items-center gap-6 group cursor-pointer w-max">
+                        <button class="bg-amber-600 group-hover:bg-amber-500 text-white w-20 h-20 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-[0_0_40px_rgba(217,119,6,0.4)] relative">
+                            <svg class="w-8 h-8 ml-1 relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <span class="absolute inset-0 rounded-full border border-amber-500 animate-ping opacity-20" style="animation-duration: 2s;"></span>
+                        </button>
+                        <span class="text-white font-bold uppercase tracking-widest text-sm group-hover:text-amber-400 transition-colors">Play Latest Episode</span>
+                    </div>
+                </div>
+
+                <div class="relative" data-aos="zoom-in-left" data-aos-duration="1500" data-aos-delay="200">
+                    <div class="bg-slate-900/40 backdrop-blur-2xl border border-slate-700/50 rounded-sm p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+                        
+                        <div class="absolute top-12 right-12 w-40 h-40 rounded-full border border-slate-600/20 border-t-amber-500 animate-spin" style="animation-duration: 8s; animation-timing-function: linear;"></div>
+                        <div class="absolute top-16 right-16 w-32 h-32 rounded-full border border-slate-600/20 border-b-slate-400 animate-spin" style="animation-duration: 6s; animation-direction: reverse; animation-timing-function: linear;"></div>
+                        <div class="absolute top-24 right-24 w-16 h-16 bg-slate-800 rounded-full shadow-inner flex items-center justify-center z-0">
+                            <div class="w-4 h-4 bg-black rounded-full"></div>
+                        </div>
+                        
+                        <div class="mb-14 relative z-10 pt-4">
+                            <div class="bg-amber-500/10 border border-amber-500/30 text-amber-500 text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm inline-block mb-6">Episode 42</div>
+                            <h3 class="text-3xl font-serif text-white font-bold mb-3 drop-shadow-md">The Phenomenology of Time</h3>
+                            <p class="text-slate-400 text-sm tracking-wide">Narrated by Dr. Alan Vance</p>
+                        </div>
+
+                        <div class="relative z-10 mb-10 group-hover:scale-[1.02] transition-transform duration-500">
+                            <div class="w-full bg-slate-800 rounded-full h-1.5 mb-3 relative overflow-hidden cursor-pointer">
+                                <div class="absolute top-0 left-0 bg-gradient-to-r from-amber-600 to-amber-400 h-1.5 rounded-full" style="width: 45%"></div>
+                                <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md" style="left: 45%"></div>
+                            </div>
+                            <div class="flex justify-between text-xs text-slate-500 font-medium tracking-widest">
+                                <span>24:15</span>
+                                <span>58:30</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 relative z-10 border-t border-slate-800 pt-6">
+                            <div class="text-xs text-slate-500 uppercase tracking-widest font-bold mb-4">Chapters</div>
+                            
+                            <div class="flex items-center justify-between group/track cursor-pointer p-3 rounded-sm bg-slate-800/60 border border-slate-700/50 transition-colors">
+                                <div class="flex items-center gap-5">
+                                    <div class="flex items-end h-4 gap-0.5">
+                                        <div class="w-1 bg-amber-500 h-full animate-bounce" style="animation-duration: 0.8s"></div>
+                                        <div class="w-1 bg-amber-500 h-2/3 animate-bounce" style="animation-duration: 0.5s"></div>
+                                        <div class="w-1 bg-amber-500 h-1/2 animate-bounce" style="animation-duration: 1.2s"></div>
+                                    </div>
+                                    <div class="text-amber-400 text-sm font-medium">Internal Time Consciousness</div>
+                                </div>
+                                <span class="text-xs text-slate-400 font-medium">18:00</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between group/track cursor-pointer p-3 rounded-sm hover:bg-slate-800/40 transition-colors">
+                                <div class="flex items-center gap-5">
+                                    <div class="text-slate-600 font-bold text-xs tracking-widest">02</div>
+                                    <div class="text-slate-400 text-sm font-medium group-hover/track:text-white transition-colors">Retention and Protention</div>
+                                </div>
+                                <span class="text-xs text-slate-600 font-medium">32:45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-slate-400 py-16 border-t border-slate-800 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 text-sm">
+            <div class="md:col-span-2">
+                <h4 class="font-serif text-white text-3xl tracking-widest uppercase mb-6">Aletheia.</h4>
+                <p class="max-w-md leading-relaxed text-slate-400">A premium digital publication dedicated to rigorous philosophical research, existential inquiry, and modern ethics. Elevating the discourse of tomorrow through the wisdom of the past.</p>
             </div>
             <div>
-                <h4 class="text-white font-semibold uppercase tracking-wider mb-4">Navigation</h4>
-                <ul class="space-y-2">
-                    <li><a href="articles.html" class="hover:text-amber-400">Journals & Articles</a></li>
-                    <li><a href="research.html" class="hover:text-amber-400">Current Research</a></li>
-                    <li><a href="events.html" class="hover:text-amber-400">Symposiums</a></li>
-                    <li><a href="submit.html" class="hover:text-amber-400">Call for Papers</a></li>
+                <h4 class="text-white font-bold uppercase tracking-[0.2em] mb-6 text-xs">Navigation</h4>
+                <ul class="space-y-4">
+                    <li><a href="articles.html" class="hover:text-amber-400 transition-colors">Journals & Articles</a></li>
+                    <li><a href="research.html" class="hover:text-amber-400 transition-colors">Current Research</a></li>
+                    <li><a href="events.html" class="hover:text-amber-400 transition-colors">Symposiums</a></li>
+                    <li><a href="submit.html" class="hover:text-amber-400 transition-colors text-amber-600">Call for Papers</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-semibold uppercase tracking-wider mb-4">Connect</h4>
-                <p class="mb-2">contact@aletheia-journal.edu</p>
-                <div class="flex space-x-4 mt-4">
-                    <a href="#" class="text-slate-400 hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                <h4 class="text-white font-bold uppercase tracking-[0.2em] mb-6 text-xs">Connect</h4>
+                <p class="mb-4 hover:text-white transition-colors cursor-pointer">contact@aletheia-journal.edu</p>
+                <div class="flex space-x-5 mt-6">
+                    <a href="#" class="text-slate-500 hover:text-white transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-slate-800 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800/50 text-center text-xs tracking-widest uppercase text-slate-600">
             &copy; 2026 Aletheia Journal of Philosophy. All rights reserved.
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 1000,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 100
+            });
+        });
+    </script>
 </body>
 </html>
