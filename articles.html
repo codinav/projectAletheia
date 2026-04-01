@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles | Aletheia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } h1, h2, h3, .font-serif { font-family: 'Merriweather', serif; } </style>
+</head>
+<body class="bg-slate-50 text-slate-900" x-data="{ 
+    filter: 'All',
+    search: '',
+    articles: [
+        { title: 'The Modern Application of Stoic Resilience', author: 'Dr. Elena Rostova', cat: 'Ethics', img: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', date: 'Oct 12, 2025' },
+        { title: 'Consciousness in the Machine: AI and Being', author: 'James Thorne', cat: 'Metaphysics', img: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', date: 'Oct 05, 2025' },
+        { title: 'Post-Truth and the Collapse of Shared Reality', author: 'Prof. Sarah Chen', cat: 'Epistemology', img: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', date: 'Sep 28, 2025' },
+        { title: 'Nietzsche and the Art of Self-Creation', author: 'Dr. Alan Vance', cat: 'Ethics', img: 'https://images.unsplash.com/photo-1535905557558-afc4877a26fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', date: 'Sep 14, 2025' },
+        { title: 'Free Will in a Deterministic Universe', author: 'Martha Stewart, Ph.D.', cat: 'Metaphysics', img: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', date: 'Aug 30, 2025' },
+        { title: 'The Limits of Empiricism', author: 'David Hume II', cat: 'Epistemology', img: 'https://images.unsplash.com/photo-1518655048521-f130df041f66?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', date: 'Aug 12, 2025' }
+    ]
+}">
+
+    <nav class="bg-slate-900 w-full z-50 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="index.html" class="font-serif text-2xl font-bold tracking-wider">ALETHEIA.</a>
+                <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-medium">
+                    <a href="index.html" class="hover:text-amber-300 transition-colors">Home</a>
+                    <a href="articles.html" class="hover:text-amber-300 transition-colors border-b-2 border-amber-300">Articles</a>
+                    <a href="research.html" class="hover:text-amber-300 transition-colors">Research</a>
+                    <a href="events.html" class="hover:text-amber-300 transition-colors">Events</a>
+                    <a href="submit.html" class="bg-amber-600 hover:bg-amber-500 text-white px-5 py-2 rounded-sm transition-colors">Submit</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <h1 class="text-5xl font-serif font-bold text-slate-900 mb-6" data-aos="fade-down">The Journal Archives</h1>
+        
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6" data-aos="fade-up">
+            <div class="flex space-x-4 overflow-x-auto w-full md:w-auto pb-2 border-b border-slate-200">
+                <button @click="filter = 'All'" :class="filter === 'All' ? 'border-amber-600 text-amber-600' : 'border-transparent text-slate-500'" class="pb-2 border-b-2 font-medium hover:text-amber-600 transition-colors whitespace-nowrap">All</button>
+                <button @click="filter = 'Ethics'" :class="filter === 'Ethics' ? 'border-amber-600 text-amber-600' : 'border-transparent text-slate-500'" class="pb-2 border-b-2 font-medium hover:text-amber-600 transition-colors whitespace-nowrap">Ethics</button>
+                <button @click="filter = 'Metaphysics'" :class="filter === 'Metaphysics' ? 'border-amber-600 text-amber-600' : 'border-transparent text-slate-500'" class="pb-2 border-b-2 font-medium hover:text-amber-600 transition-colors whitespace-nowrap">Metaphysics</button>
+                <button @click="filter = 'Epistemology'" :class="filter === 'Epistemology' ? 'border-amber-600 text-amber-600' : 'border-transparent text-slate-500'" class="pb-2 border-b-2 font-medium hover:text-amber-600 transition-colors whitespace-nowrap">Epistemology</button>
+            </div>
+            <input type="text" x-model="search" placeholder="Search articles..." class="w-full md:w-64 px-4 py-2 border border-slate-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <template x-for="article in articles.filter(a => (filter === 'All' || a.cat === filter) && a.title.toLowerCase().includes(search.toLowerCase()))" :key="article.title">
+                <article class="group cursor-pointer bg-white border border-slate-100 shadow-sm rounded-sm overflow-hidden" @click="window.location='article.html'">
+                    <div class="overflow-hidden relative">
+                        <img :src="article.img" class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-slate-900 text-white text-xs font-bold px-3 py-1 uppercase tracking-wider" x-text="article.cat"></div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs text-amber-600 font-semibold mb-2" x-text="`By ${article.author} • ${article.date}`"></p>
+                        <h3 class="text-xl font-serif font-bold text-slate-900 mb-2 group-hover:text-amber-600 transition-colors" x-text="article.title"></h3>
+                    </div>
+                </article>
+            </template>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
